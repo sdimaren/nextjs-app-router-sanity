@@ -1,9 +1,13 @@
 // ./app/page.tsx
 
-export default function Page() {
-  return (
-    <main className="flex items-center justify-center min-h-screen">
-      Populate me with Sanity Content
-    </main>
-  )
+import { SanityDocument } from "next-sanity";
+
+import Posts from "@/components/Posts";
+import { loadQuery } from "@/sanity/lib/store";
+import { POSTS_QUERY } from "@/sanity/lib/queries";
+
+export default async function Page() {
+  const initial = await loadQuery<SanityDocument[]>(POSTS_QUERY);
+
+  return <Posts posts={initial.data} />
 }
